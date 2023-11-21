@@ -22,7 +22,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
       <CardActionArea onClick={() => router.push(`/product/${product.id}`)}>
         <CardMedia
           sx={{ height: 140 }}
-          image={product.images[2]?.url}
+          image={product.images[0]?.url}
           title={product.title}
           style={{ objectFit: "contain" }}
         />
