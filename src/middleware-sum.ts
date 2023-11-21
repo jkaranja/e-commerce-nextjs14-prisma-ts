@@ -5,6 +5,7 @@
 
 // Middleware allows you to run code before a request is completed. Then, based on the incoming request, you can modify the response by rewriting, redirecting, modifying the request or response headers, or responding directly.
 // middleware will run  before routes are matched
+//middleware runs on the server side whenever a req is received(for matched routes if given)
 // This function can be marked `async` if using `await` inside
 //export function middleware(request: NextRequest) {
 // 2 ways of defining paths that middleware will run on
@@ -39,7 +40,7 @@
 //You can match a single path(supply a string:  matcher: '/about/:path*',) or multiple paths with an array syntax:
 //The matcher values need to be constants so they can be statically analyzed at build-time. Dynamic values such as variables will be ignored.
 ///matcher: '/about/:path', matches only /about/a and /about/b but not /about/a/c. Use modifiers like:
-//matcher: /about/:path* matches /about/a , /about/b /about/a/b/c etc because * is zero or more. (other modifiers=> ? is zero or one and + one or more)
+//matcher: /about/:path* matches /about,  /about/a , /about/b /about/a/b/c etc because * is zero or more. (other modifiers=> ? is zero or one and + one or more)
 // export const config = {
 //   matcher: ["/about/:path*", "/dashboard/:path*"],
 // };
@@ -76,7 +77,7 @@ import { withAuth } from "next-auth/middleware";
 // export default withAuth(
 //   // `withAuth` augments your `Request` with the user's token.
 //   function middleware(req) {
-//     // console.log(req.nextauth.token);
+//     // console.log(req.nextauth.token);//token is what is return by the jwt cb//(token = null or jwt cb return value)
 //     //if starts with admin, check if token has admin roles else redirect to login using NextResponse.redirect()-see above in middleware
 //     //console.log(req.nextUrl.pathname === "admin");
 //     //return NextResponse.redirect(new URL("/home", req.url));
@@ -90,6 +91,7 @@ import { withAuth } from "next-auth/middleware";
 //       //or if route startWith, in this case no need for exporting config option,
 //       //
 //       authorized: ({ req,token }) => {
+//(token will be null if not signed in)
 //         //protected vendor & buyer routes req token
 //         // if (token === null) {
 //         //   return false;

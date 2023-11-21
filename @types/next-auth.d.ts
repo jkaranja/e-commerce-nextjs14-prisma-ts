@@ -1,4 +1,5 @@
-import { Role } from "@/app/types/user";
+ 
+import { Role } from "@prisma/client";
 import NextAuth, { DefaultSession } from "next-auth";
 
 // https:next-auth.js.org/getting-started/typescript#module-augmentation
@@ -28,9 +29,9 @@ declare module "next-auth" {
   }
 }
 
-//type for token if appending values in jwt cb
+//type for token if appending values in jwt cb or using token.roles in middleware
 declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
-    // roles: Role[];
+     roles?: Role[];
   }
 }

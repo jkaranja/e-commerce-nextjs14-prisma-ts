@@ -1,10 +1,13 @@
 "use client";
 
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import ArrowRightAltOutlinedIcon from "@mui/icons-material/ArrowRightAltOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
-import ViewListOutlinedIcon from "@mui/icons-material/ViewListOutlined";
+import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import {
   Accordion,
   AccordionDetails,
@@ -33,33 +36,33 @@ const pages = [
   {
     label: "Dashboard",
     link: "dashboard",
-    icon: <ListAltOutlinedIcon />,
+    icon: <BarChartOutlinedIcon />,
   },
   {
     label: "Catalog",
     link: "",
-    icon: <ListAltOutlinedIcon />,
+    icon: <InventoryOutlinedIcon />,
     children: [
       {
         link: "products",
-        icon: <ViewListOutlinedIcon />,
+        icon: <ArrowRightAltOutlinedIcon />,
         label: "Products",
       },
       {
         link: "brands",
-        icon: <ViewListOutlinedIcon />,
+        icon: <ArrowRightAltOutlinedIcon />,
         label: "brands",
       },
 
       {
         link: "categories",
-        icon: <ViewListOutlinedIcon />,
+        icon: <ArrowRightAltOutlinedIcon />,
         label: "Categories",
       },
 
       {
         link: "colors",
-        icon: <ViewListOutlinedIcon />,
+        icon: <ArrowRightAltOutlinedIcon />,
         label: "Color",
       },
     ],
@@ -67,12 +70,12 @@ const pages = [
   {
     label: "Orders",
     link: "orders",
-    icon: <ListAltOutlinedIcon />,
+    icon: <ShoppingCartOutlinedIcon />,
   },
   {
     label: "Marketing",
     link: "marketing",
-    icon: <ListAltOutlinedIcon />,
+    icon: <TimelineOutlinedIcon />,
     children: [
       {
         link: "coupons",
@@ -139,7 +142,11 @@ const Sidebar = ({
           >
             {!children ? (
               <ListItemButton onClick={() => navigateTo(`/vendor/${link}`)}>
-                <ListItemIcon sx={{ minWidth: 30 }}>{icon}</ListItemIcon>
+                <ListItemIcon
+                  sx={{ minWidth: 30, color: "rgba(231, 227, 252)" }}
+                >
+                  {icon}
+                </ListItemIcon>
                 <ListItemText primary={<Typography>{label}</Typography>} />
               </ListItemButton>
             ) : (
@@ -149,10 +156,10 @@ const Sidebar = ({
                 square
                 sx={{ width: "100%" }}
                 //expanded={true}
-                //defaultExpanded
+                defaultExpanded={label === "Catalog"}
               >
                 <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
+                  expandIcon={<ExpandMoreIcon color="primary" />}
                   sx={{
                     borderRight: pathname.startsWith(label) ? 3 : 0,
                     borderColor: "primary.main",
@@ -173,7 +180,7 @@ const Sidebar = ({
                     }}
                   >
                     {children.map(({ label, link, icon }, index) => (
-                      <Box key={index+label}>
+                      <Box key={index + label}>
                         {/* divider={text !== "Orders"}  rgba(231, 227, 252, 0.08) */}
                         <ListItem
                           key={label}
@@ -187,7 +194,9 @@ const Sidebar = ({
                           <ListItemButton
                             onClick={() => navigateTo(`/vendor/${link}`)}
                           >
-                            <ListItemIcon>{icon}</ListItemIcon>
+                            <ListItemIcon sx={{ color: "rgba(231, 227, 252)" }}>
+                              {icon}
+                            </ListItemIcon>
                             <ListItemText
                               secondaryTypographyProps={{
                                 sx: { color: "rgba(231, 227, 252)" },

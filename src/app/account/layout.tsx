@@ -18,14 +18,14 @@ const sidebarWidth = 260;
 
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   //Authentication-> kick out if Unauthenticated
-  const {
-    data: session,
-    status,
-    update,
-  } = useSession({
-    required: true,
-    onUnauthenticated: () => redirect("/"),
-  });
+  // const {
+  //   data: session,
+  //   status,
+  //   update,
+  // } = useSession({
+  //   required: true,
+  //   onUnauthenticated: () => redirect("/"),
+  // });
  
 
   const [sidebarOpen, setSidebarOpen] = useState(false);

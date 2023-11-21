@@ -1,6 +1,6 @@
 import prisma from "@/app/config/prisma-client";
-import { IUser, Role } from "@/app/types/user";
-import { User } from "@prisma/client";
+ 
+import { Role, User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -140,7 +140,7 @@ export const authOptions: NextAuthOptions = {
 
       //The user object that you return here will be accessed as token in the session callback to add to the session cookie.
 
-      //*token is available in middleware withAuth callbacks. So can add role here and retrieve it in middleware.
+      //*token(what is returned by jwt cb) is available in middleware withAuth callbacks. So can add role here and retrieve it in middleware.
       //this will be used to protect pages using RBAC on frontend. Can also use it to pass Oauth info to session callback then access it on client side
 
       //* Persist the OAuth access_token and or the user id to the token right after signin
@@ -206,15 +206,17 @@ export const authOptions: NextAuthOptions = {
   //ref: https://next-auth.js.org/configuration/pages
   ///To add a custom login page, you can use the pages option:
   //this pages need to actually exist in specified relative paths eg pages/auth/error.js
-  // pages: {
-  //   signIn: "/", //default "/auth/signin" //errors will be passed as error query parameters eg /auth/signin?error=Default, see others
-  //   //this apply only when you are not using signIn() to handle sign in yourself but relying on the default signIn page
-  //   signOut: "/", //default "/auth/signout"
-  //   //it is still redirecting using the error page on signOut()
-  //   error: "/", //default "auth/error" Error code passed in query string as /auth/error?error=AccessDenied etc, see others
-  //   //  verifyRequest: "/auth/verify-request", // (used for check email message)
-  //   // newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
-  // },
+  //to use default pages, must not provide this pages options.
+  //explicitly adding the default path eg /api/auth/signin won't work
+  pages: {
+    signIn: "/", //default "/api/auth/signin" //errors will be passed as error query parameters eg /auth/signin?error=Default, see others
+    //this apply only when you are not using signIn() to handle sign in yourself but relying on the default signIn page
+    signOut: "/", //default "/api/auth/signout"
+    //it is still redirecting using the error page on signOut()
+    error: "/", //default "/api/auth/error" Error code passed in query string as /auth/error?error=AccessDenied etc, see others
+    //  verifyRequest: "/api/auth/verify-request", // (used for check email message)
+    // newUser: "/api/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
 
   //Must be
   secret: process.env.NEXTAUTH_SECRET, //for enc jwt//Required whether using db or jwt strategy as both use session cookie to identify current user session. Diff is the info stored in this cookie/token

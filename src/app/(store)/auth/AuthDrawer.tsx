@@ -44,6 +44,16 @@ const AuthDrawer = ({ handleClose, open }: AuthDrawerProps) => {
     register,
   } = useForm<IRegisterForm>();
 
+  //Authentication-> kick out if Unauthenticated
+  // const {
+  //   data: session,
+  //   status,
+  //   update,
+  // } = useSession({
+  //   required: true,
+  //   onUnauthenticated: () => redirect("/"),
+  // });
+
   /**--------------------------------
    HANDLE LOGIN SUBMIT
  -------------------------------------*/

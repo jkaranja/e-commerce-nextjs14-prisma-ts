@@ -32,12 +32,16 @@ import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
 import AuthDrawer from "../auth/AuthDrawer";
 import CartDrawer from "../cart/CartDrawer";
+import { Role } from "@prisma/client";
 
 //drawer
 const drawerWidth = 280;
 
 const Header = () => {
   const { data: session, status, update } = useSession();
+
+  const isAuthorized =
+    status === "authenticated" && session?.user?.roles?.includes(Role.BUYER);
 
   const {
     state: { cart, order },
@@ -160,7 +164,7 @@ const Header = () => {
               Sell your product
             </Button>
 
-            {status !== "authenticated" && (
+            {!isAuthorized && (
               <>
                 <Button color="secondary" onClick={handleToggleAuthD}>
                   Login
@@ -205,7 +209,7 @@ const Header = () => {
               </Badge>
             </Tooltip>
 
-            {status === "authenticated" && (
+            {isAuthorized && (
               <Tooltip title="Saved items">
                 <IconButton
                   size="medium"
