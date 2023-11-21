@@ -11,16 +11,16 @@ interface QueryOptions {
 
 export const getProducts = async ({ tag }: QueryOptions) => {
   try {
-    const session = await getServerSession(authOptions);
+    // const session = await getServerSession(authOptions);
 
-    if (!session?.user) throw new Error("Unauthorized");
+    // if (!session?.user) throw new Error("Unauthorized");
 
-    const userId = session.user.id;
+    // const userId = session.user.id;
 
     //this filter is different since its type is for counting only, no take or skip exists
     const filter: Prisma.ProductCountArgs = {
       where: {
-        userId, //filter by foreign key === primary key of user whom the notes belong to
+        //userId, //filter by foreign key === primary key of user whom the notes belong to
         //title like %word% and case insensitive
         //  title: {
         //    contains: searchTerm,
