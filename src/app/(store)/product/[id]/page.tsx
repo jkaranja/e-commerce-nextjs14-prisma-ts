@@ -46,7 +46,7 @@ const ProductDetails = ({ params: { id } }: ProductDetailsProps) => {
         //toast.info(error.message as string);
       }
     });
-  }, []); 
+  }, [id]); 
 
   if (!product)
     return (

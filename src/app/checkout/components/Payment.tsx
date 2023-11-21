@@ -62,8 +62,9 @@ const Payment = () => {
         },
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues, method]);
-   console.log(order);
+ 
 
   return (
     <Box>

@@ -36,6 +36,7 @@ const Shipping = () => {
           charges[selectedValue as keyof typeof charges],
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedValue]);
 
   return (

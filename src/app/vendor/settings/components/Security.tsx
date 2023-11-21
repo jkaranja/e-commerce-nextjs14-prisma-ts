@@ -76,6 +76,7 @@ const Security = ({ user }: SecurityProps) => {
     if (errors.newPassword || errors.confirmPassword) {
       setOpenPwdD(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Object.keys(errors).length, submitCount]); //1st submit try errors change coz mode= onSubmit//close d if err//2nd try if same err, errors does change, dialog not closed=> use submitCount/(can be enough alone)
 
   //feedback

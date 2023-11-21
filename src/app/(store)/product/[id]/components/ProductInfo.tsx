@@ -71,6 +71,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
   //if already in cart
   const isInCart = useMemo(() => {
     return cart.map((item: IItem) => item.id).includes(product.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
   return (

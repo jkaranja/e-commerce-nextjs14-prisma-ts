@@ -56,6 +56,7 @@ const Filters = ({ filters, handleUpdateFilters }: FiltersProps) => {
 
   useEffect(() => {
     handleUpdateFilters("priceRange", priceRange);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceRange]);
 
   return (

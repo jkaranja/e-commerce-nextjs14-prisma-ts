@@ -86,6 +86,7 @@ const Address = ({ user }: AddressProps) => {
     if (Object.keys(errors).length) {
       setOpenPwdD(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Object.keys(errors).length, submitCount]); //note: passing errors won;t work => errors holds a reference to errors object/won't change
 
   //feedback

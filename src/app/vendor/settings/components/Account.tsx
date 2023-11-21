@@ -62,6 +62,7 @@ const Account = ({ user }: AccountProps) => {
     if (errors.username || errors.email) {
       setOpenPwdD(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Object.keys(errors).length, submitCount]); //note: passing errors won;t work => errors holds a reference to errors object/won't change
 
   //feedback

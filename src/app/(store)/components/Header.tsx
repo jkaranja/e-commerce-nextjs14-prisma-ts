@@ -81,6 +81,7 @@ const Header = () => {
     //if already there, update query string
     //value will use encodeURIComponent->so use decodeURi... when retrieving
     router.push(`/shop?${createQueryString("q", debouncedQuery)}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery]);
 
   return (

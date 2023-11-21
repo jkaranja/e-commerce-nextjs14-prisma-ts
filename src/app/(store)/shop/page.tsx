@@ -84,6 +84,7 @@ const Shop = () => {
       filters.cat = category;
       filters.subCat = "";
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, category]);
 
   return (
