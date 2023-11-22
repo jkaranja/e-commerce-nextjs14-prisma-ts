@@ -31,7 +31,7 @@ const StoreLayout = ({ children }: { children: React.ReactNode }) => {
           width={{ xs: "100vw", md: "90vw", lg: "90vw", xl: "80vw" }}
           //width={{ xs: "100vw", lg: 1250 }}
           px={3}
-          pt={6}
+          py={4}
         >
           {children}
         </Box>

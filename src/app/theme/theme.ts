@@ -14,7 +14,7 @@ export const themeSettings = (prefersDarkMode: boolean) => {
         //custom
         light: "#fa9029",
         main: "#F77A42",
-        dark: "#f77326",
+        dark: "#e05b1f",
       },
       error: {
         //main: "#d32f2f",

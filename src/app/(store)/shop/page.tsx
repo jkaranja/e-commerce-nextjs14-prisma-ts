@@ -1,9 +1,9 @@
 "use client";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography, Button } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState, useTransition } from "react";
-
+import TuneIcon from "@mui/icons-material/Tune";
 import { Product } from "@prisma/client";
 import { getProducts } from "./actions/actions";
 import Filters from "./components/Filters";
@@ -19,11 +19,10 @@ const Shop = () => {
   //seTransition is a React Hook that lets you update the state without blocking the UI.
   //can also use it to invoke Server Actions in next 13
   const [isPending, startTransition] = useTransition();
-  //dialogs
-  // const [openAddD, setOpenAddD] = useState(false);
-  // const [openEditD, setOpenEditD] = useState(false);
-  // const handleToggleAddD = () => setOpenAddD((prev) => !prev);
-  // const handleToggleEditD = () => setOpenEditD((prev) => !prev);
+
+  //drawers
+  const [openMobileD, setOpenMobileD] = useState(false);
+  const handleToggleMobileD = () => setOpenMobileD((prevState) => !prevState);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -100,47 +99,53 @@ const Shop = () => {
           <Filters
             filters={filters}
             handleUpdateFilters={handleUpdateFilters}
+            open={openMobileD}
+            handleClose={handleToggleMobileD}
           />
         </Grid2>
 
-        <Grid2 xs container justifyContent="center">
-          <Box
-            width={{ xs: "100vw", md: "90vw", lg: "90vw", xl: "80vw" }}
-            //width={{ xs: "100vw", lg: 1250 }}
-            px={3}
-          >
-            <Box mb={2}>
-              {!products.length && (
-                <CircularProgress size={20} color="inherit" />
-              )}
+        <Grid2 xs px={3}>
+          <Box>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ display: { lg: "none" } }}
+              onClick={handleToggleMobileD}
+              startIcon={<TuneIcon />}
+            >
+              Filters
+            </Button>
+          </Box>
 
-              <Suspense
-                fallback={
-                  <Box py={2} px={3}>
-                    <Typography>Loading...</Typography>
-                  </Box>
-                }
-              >
-                <Box py={2}>
-                  <Typography paragraph>
-                    {searchQuery && `Results for "${searchQuery}"`}
-                  </Typography>
+          <Box mb={2}>
+            {!products.length && <CircularProgress size={20} color="inherit" />}
 
-                  <Typography color="muted.main" paragraph>
-                    {!!records && `${records} products`}
-                  </Typography>
+            <Suspense
+              fallback={
+                <Box py={2} px={3}>
+                  <Typography>Loading...</Typography>
                 </Box>
+              }
+            >
+              <Box py={2}>
+                <Typography paragraph>
+                  {searchQuery && `Results for "${searchQuery}"`}
+                </Typography>
 
-                <ProductsList
-                  products={products}
-                  handlePageChange={handlePageChange}
-                  totalPages={totalPages}
-                  page={page}
-                  itemsPerPage={itemsPerPage}
-                  setItemsPerPage={setItemsPerPage}
-                />
-              </Suspense>
-            </Box>
+                <Typography color="muted.main" paragraph>
+                  {!!records && `${records} products`}
+                </Typography>
+              </Box>
+
+              <ProductsList
+                products={products}
+                handlePageChange={handlePageChange}
+                totalPages={totalPages}
+                page={page}
+                itemsPerPage={itemsPerPage}
+                setItemsPerPage={setItemsPerPage}
+              />
+            </Suspense>
           </Box>
         </Grid2>
       </Grid2>

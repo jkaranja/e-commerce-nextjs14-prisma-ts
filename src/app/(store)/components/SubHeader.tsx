@@ -52,13 +52,13 @@ const SubHeader = () => {
           borderWidth: "0 0 1px",
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-evenly", py: 1 }} variant="dense">
+        <Toolbar sx={{ justifyContent: "space-between", py: 1 }} variant="dense">
           <IconButton
             size="large"
             edge="start"
             color="secondary"
             aria-label="menu"
-            sx={{ mr: 2, color: "dark.main", display: { md: "none" } }}
+            sx={{ mx: 2, color: "dark.main", display: { md: "none" } }}
             onClick={handleDrawerToggle}
           >
             <MenuIcon />

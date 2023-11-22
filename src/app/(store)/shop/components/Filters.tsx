@@ -6,7 +6,8 @@ import ListItemText from "@mui/material/ListItemText";
 import Radio from "@mui/material/Radio";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-
+import CloseIcon from "@mui/icons-material/Close";
+import MenuIcon from "@mui/icons-material/Menu";
 import CATEGORIES from "@/app/constants/categories";
 import useSetSearchParams from "@/app/hooks/useSetSearchParams";
 import {
@@ -17,8 +18,13 @@ import {
   Divider,
   ListItem,
   Rating,
-  Typography
+  Typography,
+  IconButton,
+  Drawer,
 } from "@mui/material";
+
+//drawer
+const drawerWidth = 280;
 
 export interface IFilter {
   cat: string;
@@ -42,9 +48,16 @@ type IFilterKeys =
 type FiltersProps = {
   filters: IFilter;
   handleUpdateFilters: (key: IFilterKeys, value: any) => void;
+  handleClose: () => void;
+  open: boolean;
 };
 
-const Filters = ({ filters, handleUpdateFilters }: FiltersProps) => {
+const Filters = ({
+  filters,
+  handleUpdateFilters,
+  open,
+  handleClose,
+}: FiltersProps) => {
   const router = useRouter();
 
   const createQueryString = useSetSearchParams();
@@ -59,15 +72,11 @@ const Filters = ({ filters, handleUpdateFilters }: FiltersProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceRange]);
 
-  return (
-    <Box px={3} pb={4}>
+  const content = (
+    <Box>
       <List>
         {CATEGORIES.map(({ cat, subCats }, index) => (
-          <ListItem
-            key={cat + index}
-            disablePadding
-            
-          >
+          <ListItem key={cat + index} disablePadding>
             <Accordion
               disableGutters
               elevation={0}
@@ -122,9 +131,7 @@ const Filters = ({ filters, handleUpdateFilters }: FiltersProps) => {
           </ListItem>
         ))}
       </List>
-
       <Divider />
-
       <Typography paragraph pt={2}>
         Product rating
       </Typography>
@@ -136,12 +143,10 @@ const Filters = ({ filters, handleUpdateFilters }: FiltersProps) => {
           //precision={0.5}
         />
       </Box>
-
       <Typography paragraph pt={2}>
         Price (KSH)
       </Typography>
       <PriceRange priceRange={priceRange} setPriceRange={setPriceRange} />
-
       <Typography paragraph pt={2}>
         Color
       </Typography>
@@ -164,7 +169,6 @@ const Filters = ({ filters, handleUpdateFilters }: FiltersProps) => {
                 // onChange={handleChange}
                 checked={filters.color === color}
               />
-
               <ListItemText
                 primary={
                   <Typography textTransform="capitalize">{color}</Typography>
@@ -182,7 +186,6 @@ const Filters = ({ filters, handleUpdateFilters }: FiltersProps) => {
           </ListItem>
         ))}
       </List>
-
       <Typography paragraph pt={2}>
         Promotion
       </Typography>
@@ -216,6 +219,44 @@ const Filters = ({ filters, handleUpdateFilters }: FiltersProps) => {
           </ListItem>
         ))}
       </List>
+    </Box>
+  );
+
+  return (
+    <Box>
+      <Box pb={4} sx={{ display: { xs: "none", lg: "block" } }}>
+        {content}
+      </Box>
+
+      <Drawer
+        variant="temporary"
+        open={open}
+        onClose={handleClose}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        sx={{
+          display: { xs: "block", lg: "none" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: drawerWidth,
+          },
+        }}
+        PaperProps={{
+          sx: {
+            //bgcolor: "secondary.dark",
+            //color: "dull.main",
+          },
+        }}
+      >
+        <Box textAlign="right" py={2}>
+          <IconButton onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+
+        <Box px={2}>{content}</Box>
+      </Drawer>
     </Box>
   );
 };

@@ -103,15 +103,14 @@ const Header = () => {
         elevation={0}
         sx={{
           bgcolor: "#fff",
-          px: 2,
+
           borderColor: "gray.border",
           borderStyle: "solid",
           borderWidth: "0 0 1px",
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-evenly" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography
-            px={3}
             color="primary.main"
             variant="h5"
             fontWeight="bold"
@@ -126,7 +125,7 @@ const Header = () => {
             edge="start"
             color="secondary"
             aria-label="menu"
-            sx={{ mr: 2, color: "dark.main", display: { md: "none" } }}
+            sx={{ mx: 2, color: "dark.main", display: { lg: "none" } }}
             onClick={handleToggleMobileD}
           >
             <MenuIcon />
@@ -156,10 +155,10 @@ const Header = () => {
                 </InputAdornment>
               ),
             }}
-            sx={{ maxWidth: "50vw", px: 3 }}
+            sx={{ maxWidth: "50vw" }}
           />
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
             <Button color="secondary" component={Link} href="/vendor-hub">
               Sell your product
             </Button>
@@ -272,7 +271,7 @@ const Header = () => {
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: "block", md: "none" },
+          display: { xs: "block", lg: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,

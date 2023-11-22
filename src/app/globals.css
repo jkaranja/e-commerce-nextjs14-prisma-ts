@@ -16,6 +16,29 @@
   }
 }
 
+.hero-wrap {
+  position: relative;
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image: linear-gradient(
+      to right,
+      rgba(16, 24, 40, 1),
+      rgba(16, 24, 40, 0.9),
+      rgba(16, 24, 40, 0.5),
+      rgba(16, 24, 40, 0.9),
+      rgba(16, 24, 40, 0.4)
+    ),
+    url("/banner.jpg");
+  /*../public or ./public or /public or /bg3.png will all work in dev//always use 
+    /bg3.png with slash (no public) else with vite, built app won't load images */
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  min-height: 500px;
+  border-radius: 5px;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

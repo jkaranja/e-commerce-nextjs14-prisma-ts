@@ -17,7 +17,7 @@ const PriceRange = ({ priceRange, setPriceRange }: PriceRangeProps) => {
     <Box>
       <Box display="flex" alignItems="center" columnGap={1}>
         <TextField
-          sx={{ width: 110 }}
+          sx={{ width: 90 }}
           size="small"
           placeholder="0"
           //error={false}//Whether to style the TextInput with error style.
@@ -36,7 +36,7 @@ const PriceRange = ({ priceRange, setPriceRange }: PriceRangeProps) => {
 
         <TextField
           size="small"
-          sx={{ width: 110 }}
+          sx={{ width: 90 }}
           type="number"
           inputProps={{ max: 500000, min: 100 }}
           placeholder="0"
@@ -53,7 +53,7 @@ const PriceRange = ({ priceRange, setPriceRange }: PriceRangeProps) => {
         />
       </Box>
 
-      <Box pt={3}>
+      <Box pt={3} px={2}>
         <Slider
           getAriaLabel={() => "Price range"}
           value={priceRange}

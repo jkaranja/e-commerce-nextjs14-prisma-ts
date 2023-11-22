@@ -52,11 +52,7 @@ const Home = () => {
     });
   }, []);
   return (
-    <Box
-      width={{ xs: "100vw", md: "90vw", lg: "90vw", xl: "80vw" }}
-      //width={{ xs: "100vw", lg: 1250 }}
-      p={3}
-    >
+    <Box>
       <Grid2
         container
         justifyContent="space-between" //xs below stretches/flex grow Typography vertically
@@ -65,7 +61,46 @@ const Home = () => {
         flexDirection={{ xs: "column", md: "row" }}
         columnGap={3}
       >
-        <Grid2 xs>
+        <Grid2
+          xs
+          mb={1}
+          className="hero-wrap"
+          p={5}
+          container
+          flexDirection="column"
+          alignItems="flex-start"
+          justifyContent="center"
+          rowGap={5}
+        >
+          <Box>
+            <Typography
+              paragraph
+              variant="h4"
+              fontWeight={900}
+              color="#fff"
+              textTransform="capitalize"
+              mb={3}
+            >
+              Holiday deals on custom printed T-shirts
+            </Typography>
+
+            <Typography
+              paragraph
+              variant="h6"
+              color="#fff"
+              textTransform="capitalize"
+            >
+              Up to 40% off on all items — Pay less for more
+            </Typography>
+          </Box>
+          <Button
+            size="large"
+            variant="contained"
+            component={Link}
+            href="/shop"
+          >
+            Shop now
+          </Button>
           {/* <Image
           src="/banner.jpg" //File or Fetched file url
           alt="banner"
@@ -74,11 +109,11 @@ const Home = () => {
           width={110}
           style={{ objectFit: "cover", width: "100%" }}
         /> */}
-          <CardMedia
+          {/* <CardMedia
             sx={{ height: 500, borderRadius: 2 }}
             image="/banner.jpg"
             title="banner"
-          />
+          /> */}
         </Grid2>
 
         <Grid2 xs md={3}>
