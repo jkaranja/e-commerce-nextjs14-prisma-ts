@@ -1,12 +1,7 @@
 "use client";
 import { Suspense, useState, useTransition } from "react";
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Typography
-} from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 
 import { useContextValue } from "@/app/hooks/useContextValue";
 import { useRouter } from "next/navigation";
@@ -46,21 +41,19 @@ const Stepper = ({}: StepperProps) => {
 
   //place order
   const handlePlaceOrder = async () => {
-    startTransition(async () => {
-      try {
-        const result = await placeOrder(order);
-        toast.success("Order placed");
+    try {
+      const result = await placeOrder(order);
+      toast.success("Order placed");
 
-        //clear cart and order->then go to orders
-        dispatch({ type: "RESET_CART" });
+      //clear cart and order->then go to orders
+      dispatch({ type: "RESET_CART" });
 
-        //redirect(`/account/orders`);//don't use redirect//Know bug/error: NEXT_REDIRECT
-        router.push("/account/orders");
-      } catch (error: any) {
-        toast.error(error.message as string);
-        return; //to terminate the transition state
-      }
-    });
+      //redirect(`/account/orders`);//don't use redirect//Know bug/error: NEXT_REDIRECT
+      router.push("/account/orders");
+    } catch (error: any) {
+      toast.error(error.message as string);
+      return; //to terminate the transition state
+    }
   };
 
   //prevent loading any content if navigating to checkout if no order in state
@@ -116,7 +109,7 @@ const Stepper = ({}: StepperProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={handlePlaceOrder}
+            onClick={() => startTransition(handlePlaceOrder)}
             disabled={isPending}
             endIcon={
               isPending && <CircularProgress size={20} color="inherit" />

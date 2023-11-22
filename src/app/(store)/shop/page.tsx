@@ -16,9 +16,7 @@ const Shop = () => {
 
   const category = decodeURIComponent(searchParams.get("c") || "Holiday gifts");
 
-  //seTransition is a React Hook that lets you update the state without blocking the UI.
-  //can also use it to invoke Server Actions in next 13
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
 
   //drawers
   const [openMobileD, setOpenMobileD] = useState(false);
@@ -54,16 +52,21 @@ const Shop = () => {
       return;
     }
 
-    startTransition(async () => {
+    (async () => {
       try {
+        setIsLoading(true);
         const data = await getProducts({ page, itemsPerPage, filters });
         setProducts(data?.products || []);
         setTotalPages(data?.pages || 0);
         setRecords(data?.total || 0);
+        setIsLoading(false);
+        return;
       } catch (error: any) {
+        setIsLoading(false);
+        return;
         //toast.info(error.message as string);
       }
-    });
+    })();
   }, [page, itemsPerPage, filters]);
 
   /* ----------------------------------------
@@ -76,10 +79,10 @@ const Shop = () => {
 
   //update filters from query string
   useEffect(() => {
-    if (!searchQuery) filters.title = searchQuery;
+    if (searchQuery) filters.title = searchQuery;
 
     //whenever category changes, reset subCat ="" to match all products in that CAT
-    if (!category) {
+    if (category) {
       filters.cat = category;
       filters.subCat = "";
     }
@@ -118,7 +121,7 @@ const Shop = () => {
           </Box>
 
           <Box mb={2}>
-            {!products.length && <CircularProgress size={20} color="inherit" />}
+            {isLoading && <CircularProgress size={20} color="inherit" />}
 
             <Suspense
               fallback={

@@ -45,18 +45,15 @@ const ReviewProduct = ({ open, handleClose, product }: ReviewProductProps) => {
     setValue,
   } = useForm<IReviewForm>();
 
-  //apply coupon discount
-  const onSubmit = (data: IReviewForm) => {
-    //get coupon discount
-    startTransition(async () => {
-      try {
-        const result = await submitReview({ ...data, productId: product.id });
-        toast.success(result.message);
-        handleClose();
-      } catch (error: any) {
-        toast.error(error.message as string);
-      }
-    });
+  //submit review
+  const onSubmit = async (data: IReviewForm) => {
+    try {
+      const result = await submitReview({ ...data, productId: product.id });
+      toast.success(result.message);
+      handleClose();
+    } catch (error: any) {
+      toast.error(error.message as string);
+    }
   };
   return (
     <Box>
@@ -147,7 +144,7 @@ const ReviewProduct = ({ open, handleClose, product }: ReviewProductProps) => {
           <DialogActions sx={{ px: 3, pb: 4 }}>
             <Button
               variant="contained"
-              onClick={handleSubmit(onSubmit)}
+              onClick={() => startTransition(handleSubmit(onSubmit))}
               disabled={isPending}
               endIcon={
                 isPending && <CircularProgress size={20} color="inherit" />

@@ -4,7 +4,7 @@ import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import { useEffect, useState, useTransition } from "react";
- 
+
 import MUIPagination from "@/app/components/MUIPagination";
 import { Order, Product } from "@prisma/client";
 
@@ -12,10 +12,9 @@ import { getUnReviewed } from "./actions/getUnReviewed";
 import ProductItem from "./components/ProductItem";
 
 const OrdersList = () => {
-  //seTransition is a React Hook that lets you update the state without blocking the UI.
-  //can also use it to invoke Server Actions in next 13
-  //startTransition does not return anything
   const [isPending, startTransition] = useTransition();
+
+  const [isLoading, setIsLoading] = useState(false);
   //dialogs
   const [openAddD, setOpenAddD] = useState(false);
   const [openEditD, setOpenEditD] = useState(false);
@@ -30,8 +29,9 @@ const OrdersList = () => {
   const [ordersList, setOrdersList] = useState<Order[]>([]);
 
   useEffect(() => {
-    startTransition(async () => {
+    (async () => {
       try {
+        setIsLoading(true);
         const data = await getUnReviewed({ page, itemsPerPage });
         setOrdersList(data?.orders || []);
         setProductsList(
@@ -39,10 +39,12 @@ const OrdersList = () => {
         );
         setTotalPages(data?.pages || 0);
         setRecords(data?.total || 0);
+        setIsLoading(false);
       } catch (error: any) {
+        setIsLoading(false);
         //toast.info(error.message as string);
       }
-    });
+    })();
   }, [page, itemsPerPage]);
 
   /* ----------------------------------------
@@ -60,7 +62,7 @@ const OrdersList = () => {
           Review products
         </Typography>
 
-        {isPending ? (
+        {isLoading ? (
           <CircularProgress size={20} color="inherit" />
         ) : (
           <Typography color="muted.main">

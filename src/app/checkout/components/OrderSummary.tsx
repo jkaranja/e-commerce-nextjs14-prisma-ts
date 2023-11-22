@@ -1,9 +1,4 @@
-import {
-  CircularProgress,
-  Divider,
-  FormGroup,
-  TextField
-} from "@mui/material";
+import { CircularProgress, Divider, FormGroup, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -47,24 +42,22 @@ const OrderSummary = ({}: OrderSummaryProps) => {
   } = useForm<CouponForm>();
 
   //apply coupon discount
-  const onSubmit = (data: CouponForm) => {
+  const onSubmit = async (data: CouponForm) => {
     //get coupon discount
-    startTransition(async () => {
-      try {
-        const coupon = await getCoupon(data.coupon);
+    try {
+      const coupon = await getCoupon(data.coupon);
 
-        //apply coupon if valid
-        dispatch({
-          type: "UPDATE_ORDER",
-          payload: {
-            total: order.total - coupon.discount,
-            discount: coupon.discount, //save discount applied too
-          },
-        });
-      } catch (error: any) {
-        toast.error(error.message as string);
-      }
-    });
+      //apply coupon if valid
+      dispatch({
+        type: "UPDATE_ORDER",
+        payload: {
+          total: order.total - coupon.discount,
+          discount: coupon.discount, //save discount applied too
+        },
+      });
+    } catch (error: any) {
+      toast.error(error.message as string);
+    }
   };
 
   useEffect(() => {
@@ -125,7 +118,7 @@ const OrderSummary = ({}: OrderSummaryProps) => {
             <FormGroup sx={{ flexGrow: 1 }}>
               <TextField
                 {...register("coupon", {
-                  //required: "Title is required",
+                  required: "Coupon is required",
                 })}
                 label="Discount code, gift card, or coupon"
                 margin="dense"
@@ -139,7 +132,7 @@ const OrderSummary = ({}: OrderSummaryProps) => {
             <Button
               variant="contained"
               color="secondary"
-              onClick={handleSubmit(onSubmit)}
+              onClick={() => startTransition(handleSubmit(onSubmit))}
               disabled={isPending}
               endIcon={
                 isPending && <CircularProgress size={20} color="inherit" />

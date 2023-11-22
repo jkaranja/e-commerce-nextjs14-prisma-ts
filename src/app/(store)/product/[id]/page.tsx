@@ -1,12 +1,7 @@
 "use client";
 import React, { useEffect, useState, useTransition } from "react";
 
-import {
-  Box,
-  CircularProgress,
-  Tabs,
-  Typography
-} from "@mui/material";
+import { Box, CircularProgress, Tabs, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 import MyTab from "@/app/components/MyTab";
@@ -19,15 +14,13 @@ import ProductInfo from "./components/ProductInfo";
 import Reviews from "./components/Reviews";
 import Shipping from "./components/Shipping";
 
-type ProductDetailsProps = { 
+type ProductDetailsProps = {
   params: { id: string };
 };
 
 const ProductDetails = ({ params: { id } }: ProductDetailsProps) => {
   //Authentication
   const { data: session, status, update } = useSession();
-
-  const [isPending, startTransition] = useTransition();
 
   const [product, setProduct] = useState<ProductWithRelations | null>(null);
 
@@ -38,15 +31,15 @@ const ProductDetails = ({ params: { id } }: ProductDetailsProps) => {
   };
 
   useEffect(() => {
-    startTransition(async () => {
+    (async () => {
       try {
         const data = await getProduct(id);
         setProduct(data || {});
       } catch (error: any) {
         //toast.info(error.message as string);
       }
-    });
-  }, [id]); 
+    })();
+  }, [id]);
 
   if (!product)
     return (

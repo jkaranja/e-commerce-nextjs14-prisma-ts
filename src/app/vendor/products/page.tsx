@@ -17,15 +17,12 @@ import { getProducts } from "./actions/getProducts";
 import ProductItem from "./ProductItem";
 
 const Products = () => {
-  //seTransition is a React Hook that lets you update the state without blocking the UI.
-  //can also use it to invoke Server Actions in next 13
-  //startTransition does not return anything
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
   //dialogs
   const [openAddD, setOpenAddD] = useState(false);
   const [openEditD, setOpenEditD] = useState(false);
   const handleToggleAddD = () => setOpenAddD((prev) => !prev);
-  const handleToggleEditD = () => setOpenEditD((prev) => !prev); 
+  const handleToggleEditD = () => setOpenEditD((prev) => !prev);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -35,16 +32,19 @@ const Products = () => {
   const [productsList, setProductsList] = useState<Product[]>([]);
 
   useEffect(() => {
-    startTransition(async () => {
+    (async () => {
       try {
+        setIsLoading(true);
         const data = await getProducts({ page, itemsPerPage });
         setProductsList(data?.products || []);
         setTotalPages(data?.pages || 0);
         setRecords(data?.total || 0);
+        setIsLoading(false);
       } catch (error: any) {
+        setIsLoading(false);
         //toast.info(error.message as string);
       }
-    });
+    })();
   }, [page, itemsPerPage]);
 
   /* ----------------------------------------
@@ -71,7 +71,7 @@ const Products = () => {
       </Box>
 
       <Box py={2} px={3}>
-        {isPending ? (
+        {isLoading ? (
           <CircularProgress size={20} color="inherit" />
         ) : (
           <Typography color="muted.main">

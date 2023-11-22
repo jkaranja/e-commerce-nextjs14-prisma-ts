@@ -14,6 +14,7 @@ interface QueryOptions {
 
 export const getProducts = async (options: QueryOptions) => {
   try {
+    
     /**----------------------------------
          * PAGINATION
   ------------------------------------*/
@@ -22,6 +23,7 @@ export const getProducts = async (options: QueryOptions) => {
     const itemsPerPage = options.itemsPerPage || 15; //items per page//if not sent from FE/ use default 15
     const skip = (page - 1) * itemsPerPage; //eg page = 5, it has already displayed 4 * 10//so skip prev items
     const filters = options.filters;
+    
     //this filter is different since its type is for counting only, no take or skip exists
     const filter: Prisma.ProductCountArgs = {
       where: {
@@ -37,10 +39,10 @@ export const getProducts = async (options: QueryOptions) => {
         //         isEmpty: false,
         //       }),
         // },
-        // price: {
-        //   gte: filters.priceRange[0],
-        //   lte: filters.priceRange[1],
-        // },
+        discountedPrice: {
+          gte: filters.priceRange[0],
+          lte: filters.priceRange[1],
+        },
         // colors: {
         //   ...(filters.color
         //     ? { has: filters.color }

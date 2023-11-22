@@ -1,10 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import {
-  Button,
-  IconButton,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Button, IconButton, TextField, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -18,10 +13,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import {
-  SubmitHandler,
-  useForm
-} from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import { toast } from "react-toastify";
 
@@ -546,9 +538,7 @@ const AddProduct = ({ open, handleClose }: AddProductProps) => {
             </Grid2>
           </DialogContent>
           <DialogActions sx={{ px: 3, pb: 4 }}>
-            <SubmitButton type="submit" variant="contained">
-              Submit{" "}
-            </SubmitButton>
+            <SubmitButton variant="contained">Submit </SubmitButton>
           </DialogActions>
         </form>
       </Dialog>

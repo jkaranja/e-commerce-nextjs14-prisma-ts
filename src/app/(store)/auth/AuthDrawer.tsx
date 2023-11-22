@@ -28,8 +28,6 @@ type AuthDrawerProps = {
 const AuthDrawer = ({ handleClose, open }: AuthDrawerProps) => {
   const [tabValue, setTabValue] = React.useState<string>("signin");
 
-  const [isPending, startTransition] = useTransition();
-
   const [isAuthenticating, setIsAuthenticating] = React.useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, tabValue: string) => {
@@ -82,16 +80,14 @@ const AuthDrawer = ({ handleClose, open }: AuthDrawerProps) => {
    HANDLE SIGN UP SUBMIT
  -------------------------------------*/
   const onRegisterSubmit: SubmitHandler<IRegisterForm> = async (data) => {
-    startTransition(async () => {
-      try {
-        const result = await createAccount(data);
-        toast.success(result.message as string);
-        //success: sign in the user with next-auth
-        signInWithNextAuth(data);
-      } catch (error: any) {
-        toast.error(error.message as string);
-      }
-    });
+    try {
+      const result = await createAccount(data);
+      toast.success(result.message as string);
+      //success: sign in the user with next-auth
+      signInWithNextAuth(data);
+    } catch (error: any) {
+      toast.error(error.message as string);
+    }
   };
 
   return (
@@ -171,7 +167,6 @@ const AuthDrawer = ({ handleClose, open }: AuthDrawerProps) => {
             errors={errors}
             control={control}
             register={register}
-            isLoading={isPending}
           />
         </TabPanel>
       </Box>

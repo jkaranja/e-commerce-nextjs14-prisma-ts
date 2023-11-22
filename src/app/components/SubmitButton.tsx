@@ -26,6 +26,7 @@ const SubmitButton = ({ children, ...props }: SubmitButtonProps) => {
 
   return (
     <Button
+      type="submit"
       //aria-disabled={pending}
       disabled={pending}
       endIcon={pending && <CircularProgress size={20} color="inherit" />}

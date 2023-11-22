@@ -21,6 +21,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import AuthDrawer from "../auth/AuthDrawer";
+import { Role } from "@prisma/client";
 
 //drawer
 const drawerWidth = 450;
@@ -33,6 +34,8 @@ type CartDrawerProps = {
 const CartDrawer = ({ handleClose, open }: CartDrawerProps) => {
   //Authentication
   const { data: session, status, update } = useSession();
+    const isAuthorized =
+      status === "authenticated" && session?.user?.roles?.includes(Role.BUYER);
 
   const [cartList, setCartList] = useState<IItem[]>([]);
 
@@ -69,7 +72,7 @@ const CartDrawer = ({ handleClose, open }: CartDrawerProps) => {
   //on checkout update order state
   const handleCheckout = () => {
     //if user not logged in, open auth drawer
-    if (!session?.user) return handleToggleAuthD();
+    if (!isAuthorized) return handleToggleAuthD();
 
     //update order state
     dispatch({

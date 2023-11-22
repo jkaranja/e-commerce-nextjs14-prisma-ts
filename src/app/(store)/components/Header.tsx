@@ -109,7 +109,7 @@ const Header = () => {
           borderWidth: "0 0 1px",
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-between" }}>
+        <Toolbar sx={{ justifyContent: {lg: "space-between"} }}>
           <Typography
             color="primary.main"
             variant="h5"
@@ -155,7 +155,7 @@ const Header = () => {
                 </InputAdornment>
               ),
             }}
-            sx={{ maxWidth: "50vw" }}
+            sx={{ maxWidth: "50vw", mx: 1 }}
           />
 
           <Box sx={{ display: { xs: "none", lg: "flex" } }}>

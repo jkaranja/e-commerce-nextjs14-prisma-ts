@@ -10,30 +10,22 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister
-} from "react-hook-form";
-import {
-  EMAIL_REGEX,
-  PWD_REGEX
-} from "../../constants/regex";
+import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import { EMAIL_REGEX, PWD_REGEX } from "../../constants/regex";
 import { IRegisterForm } from "./actions/createAccount";
+import SubmitButton from "@/app/components/SubmitButton";
 
 type RegisterFormProps = {
   register: UseFormRegister<IRegisterForm>;
   errors: FieldErrors<IRegisterForm>;
-  handleSubmit: () => Promise<void>;
-  isLoading: boolean;
+  handleSubmit: () => Promise<void>;   
   control: Control<IRegisterForm>;
 };
 
 const RegisterForm = ({
   handleSubmit,
   register,
-  errors,
-  isLoading,
+  errors, 
   control,
 }: RegisterFormProps) => {
   const [checkPolicy, setCheckPolicy] = useState(true);
@@ -51,7 +43,7 @@ const RegisterForm = ({
 
   return (
     <Box>
-      <form onSubmit={handleSubmit}>
+      <form action={(formData) => handleSubmit()}>
         <FormGroup sx={{ mb: 2 }}>
           <TextField
             {...register("username", {
@@ -147,16 +139,9 @@ const RegisterForm = ({
           />
         </FormGroup>
 
-        <Button
-          type="submit"
-          size="large"
-          variant="contained"
-          fullWidth
-          disabled={isLoading}
-          endIcon={isLoading && <CircularProgress size={20} color="inherit" />}
-        >
+        <SubmitButton size="large" variant="contained" fullWidth>
           Sign up
-        </Button>
+        </SubmitButton>
       </form>
     </Box>
   );

@@ -10,10 +10,7 @@ import { OrderWithProducts, getOrders } from "./actions/getOrders";
 import ProductItem from "./components/OrderItem";
 
 const OrdersList = () => {
-  //seTransition is a React Hook that lets you update the state without blocking the UI.
-  //can also use it to invoke Server Actions in next 13
-  //startTransition does not return anything
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
   //dialogs
   const [openAddD, setOpenAddD] = useState(false);
   const [openEditD, setOpenEditD] = useState(false);
@@ -28,16 +25,19 @@ const OrdersList = () => {
   const [ordersList, setOrdersList] = useState<OrderWithProducts[]>([]);
 
   useEffect(() => {
-    startTransition(async () => {
+    (async () => {
       try {
+        setIsLoading(true);
         const data = await getOrders({ page, itemsPerPage });
         setOrdersList(data?.orders || []);
         setTotalPages(data?.pages || 0);
         setRecords(data?.total || 0);
+        setIsLoading(false);
       } catch (error: any) {
+        setIsLoading(false);
         //toast.info(error.message as string);
       }
-    });
+    })();
   }, [page, itemsPerPage]);
 
   /* ----------------------------------------
@@ -51,7 +51,7 @@ const OrdersList = () => {
   return (
     <TableContainer component={Paper}>
       <Box py={2} px={3}>
-        {isPending ? (
+        {isLoading ? (
           <CircularProgress size={20} color="inherit" />
         ) : (
           <Typography color="muted.main">

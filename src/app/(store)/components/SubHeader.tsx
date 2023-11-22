@@ -52,19 +52,25 @@ const SubHeader = () => {
           borderWidth: "0 0 1px",
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-between", py: 1 }} variant="dense">
+        <Toolbar
+          sx={{
+            justifyContent: { lg: "center" },
+            py: 1,
+          }}
+          variant="dense"
+        >
           <IconButton
             size="large"
             edge="start"
             color="secondary"
             aria-label="menu"
-            sx={{ mx: 2, color: "dark.main", display: { md: "none" } }}
+            sx={{ mr: 2, color: "dark.main", display: { lg: "none" } }}
             onClick={handleDrawerToggle}
           >
             <MenuIcon />
           </IconButton>
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
             {CATEGORIES.map((cat, index) => (
               <Button
                 size="large"
@@ -90,7 +96,7 @@ const SubHeader = () => {
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: "block", md: "none" },
+          display: { xs: "block", lg: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
@@ -109,10 +115,10 @@ const SubHeader = () => {
           </IconButton>
         </Box>
         <List>
-          {Array.from({ length: 5 }, (_, index) => (
+          {CATEGORIES.map((cat, index) => (
             <ListItem key={index} divider>
               <ListItemButton>
-                <ListItemText primary="T-shirts" />
+                <ListItemText primary={cat} />
               </ListItemButton>
             </ListItem>
           ))}

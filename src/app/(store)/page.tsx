@@ -16,14 +16,14 @@ import { getProducts } from "./actions/actions";
 import ProductsList from "./components/ProductsList";
 
 const Home = () => {
-  const [isPending, startTransition] = useTransition();
+   
 
   const [featuredList, setFeaturedList] = useState<Product[]>([]);
   const [bestSellerList, setBestSellerList] = useState<Product[]>([]);
   const [limitedList, setLimitedList] = useState<Product[]>([]);
 
   useEffect(() => {
-    startTransition(async () => {
+    (async () => {
       //Parallel Data Fetching: saves time-=> faster->use Promise.all
       //initiate requests in parallel without waiting for current to resolve->Sequential Data Fetching
       //Sequential Data Fetching is used for promises that depend on each other's resolved values
@@ -49,7 +49,7 @@ const Home = () => {
           }
         })
       );
-    });
+    })();
   }, []);
   return (
     <Box>
